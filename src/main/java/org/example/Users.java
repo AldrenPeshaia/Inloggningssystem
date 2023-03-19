@@ -2,7 +2,6 @@ package org.example;
 
 public class Users {
 
-
     public String fullName;
     public String userName;
     public String password;

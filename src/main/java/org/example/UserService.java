@@ -18,6 +18,40 @@ public class UserService {
 
     public UserService() {
 
+        try {
+            if (usersFile.exists()) {
+                users = objectMapper.readValue(usersFile, new TypeReference<>() {
+                });
+            } else {
+                users = new ArrayList<>();
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to show accounts: " + e.getMessage());
+            users = new ArrayList<>();
+        }
+    }
+    public void createUserAccount(String fullName, String username, String password) {
+        Optional<Users> existingAccount = users.stream().filter(a -> a.getUserName().equals(username)).findFirst();
+        if (existingAccount.isPresent()) {
+            System.out.println("Account with username " + username + " already exists.");
+            return;
+        }
+        try {
+            Users newUsers = new Users(fullName, username, password);
+            users.add(newUsers);
+            objectMapper.writeValue(usersFile, users);
+        } catch (IOException e) {
+            System.err.println("Failed to create account: " + e.getMessage());
+        }
+    }
+
+    public void viewUsersDetails(String username) {
+        Optional<Users> account = users.stream().filter(a -> a.getUserName().equals(username)).findFirst();
+        if (account.isPresent()) {
+            System.out.println(account.get());
+        } else {
+            System.out.println("Account with username " + username + " does not exist.");
+        }
     }
 }
 
