@@ -15,7 +15,11 @@ public class UserService {
     public static final File usersFile = new File("src/main/resources/Users.json");
     public static final ObjectMapper objectMapper = new ObjectMapper();
 
-
+    /***
+     *
+     * den här metoden kollar om det finns något konto i Json filen samt hantera exemption.
+     * om den inte hittar något konto så visas ett meddelande i terminalen.
+     */
     public UserService() {
 
         try {
@@ -30,6 +34,11 @@ public class UserService {
             users = new ArrayList<>();
         }
     }
+
+    /***
+     *I denna metoden så skapas det en user men även har jag kodat här att om det finns en användare så ska
+     * det inte skapas en till med samma username.
+     */
     public void createUserAccount(String fullName, String username, String password) {
         Optional<Users> existingAccount = users.stream().filter(a -> a.getUserName().equals(username)).findFirst();
         if (existingAccount.isPresent()) {
@@ -45,6 +54,10 @@ public class UserService {
         }
     }
 
+    /***
+     * I denna metoden så har jag kodat in där du kan visa en users information men om user inte finns
+     * så ska det stå att det inte exisiterar.
+     */
     public void viewUsersDetails(String username) {
         Optional<Users> account = users.stream().filter(a -> a.getUserName().equals(username)).findFirst();
         if (account.isPresent()) {
