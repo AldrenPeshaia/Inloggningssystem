@@ -1,6 +1,6 @@
 package org.example;
 
-public class MainMenu {
+public class UserService {
     public static String MenuAlternative;
 
 

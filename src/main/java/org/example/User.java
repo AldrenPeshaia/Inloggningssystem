@@ -48,6 +48,11 @@ public class User {
         return password;
     }
 
+    @Override
+    public String toString(){
+        return "Full name: " + firstName + "\nUsername" + userName + "\nPassword" + password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
